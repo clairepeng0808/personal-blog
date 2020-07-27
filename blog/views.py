@@ -13,13 +13,12 @@ from django.views.generic import (View,TemplateView,ListView,DetailView,
                             
 
 # Create your views here.
-class AboutView(TemplateView):
-    template_name = "blog/about.html"
-    
+
+# class AboutView(TemplateView):
+#     template_name = "blog/about.html"
 
 class PostListView(ListView):
     model = models.Post
-    template_name = "blog/post_list.html"
 
     def get_queryset(self):
         return models.Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -36,13 +35,10 @@ class PostDetailView(DetailView):
         return context
     
 class PostCreateView(LoginRequiredMixin,CreateView):
-    login_url = 'login/'
-    # redirect_field_name = 'blog/post_list.html'
     model = models.Post
     form_class = forms.PostForm
     
 class PostUpdateView(LoginRequiredMixin,UpdateView):
-    login_url = '/login/'
     model = models.Post
     form_class = forms.PostForm
     
@@ -51,7 +47,6 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
     success_url = reverse_lazy('post_list')
 
 class DraftListView(LoginRequiredMixin,ListView):
-    login_url = '/login/'
     model = models.Post
 
     def get_queryset(self):
@@ -79,7 +74,6 @@ def add_comment_to_post(request,pk):
     else:
         form = forms.CommentForm()
     return redirect('post_detail', pk=post.pk)
-    
     
 @login_required
 def approve_comment(request,pk):
