@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<h1 style='color:#0077b6'>New Comment</h1>
+<form class=comment-form method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class='btn btn-primary' value="Comment">
+</form>
+{% endblock %}

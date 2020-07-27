@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<div class='blog'>
+    {% for post in post_list %}
+    <div class='post'>
+        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <span style='color:grey; font-style: italic;'>Author: {{ post.author }}</span><br>
+        <span style='color:grey; font-style: italic;' class='date'>Published on:
+            {{post.published_date|date:"D M Y"}}</span>
+        <div class='post-content'>
+            <h5 style='color:#6d6875'>{{ post.text|safe|linebreaks|truncatechars:200}}</h5>
+            <p></p>
+            <p><a style='color:grey;' href="{% url 'post_detail' pk=post.pk %}">continue reading...</a></p>
+        </div>
+        <p><a style='color:#0077b6;' href="{% url 'post_detail' pk=post.pk %}">Comments:
+                {{ post.approved_comment.count }}</a></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

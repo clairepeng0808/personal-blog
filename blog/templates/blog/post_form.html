@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+
+<div class='edit-post-title'>
+    {% if not form.instance.pk %}
+    <h1>Create Post</h1>
+    {% else %}
+    <h1>Edit Post</h1>
+    {% endif %}
+</div>
+
+<div class='edit-post-form'>
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class='btn btn-primary'>Submit</button>
+    </form>
+</div>
+
+<script>
+    var editor = new MediumEditor('.editable', {
+        placeholder: {
+            text: 'Enter your post content here',
+        },
+    });
+</script>
+{% endblock %}
